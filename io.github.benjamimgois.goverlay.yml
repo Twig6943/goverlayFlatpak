@@ -18,7 +18,7 @@ finish-args:
   - --filesystem=xdg-config/vkBasalt:rw
   - --filesystem=xdg-config/goverlay:rw
   - --filesystem=xdg-data/goverlay:rw
-  #- --filesystem=home
+  - --filesystem=$USER/fgmod:rw
 
   # Network access for downloads (OptiScaler, ReShade shaders, updates)
   - --share=network
