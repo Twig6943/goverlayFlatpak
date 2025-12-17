@@ -152,8 +152,10 @@ modules:
         . /usr/lib/sdk/freepascal/enable.sh
         export FPCDIR=/app/lib/fpc/3.2.2
         export PPC_CONFIG_PATH=/app/etc
+        export LAZARUSDIR="/usr/lib/sdk/freepascal/share/lazarus"
+        export FPCDIR="/usr/lib/sdk/freepascal/fpcsrc"
         # Build with lazbuild using configured fpc.cfg
-        make LAZBUILDOPTS="--lazarusdir=/app/share/lazarus --compiler=/app/bin/fpc"
+        make LAZBUILDOPTS="--lazarusdir=/usr/lib/sdk/freepascal/share/lazarus --compiler=/usr/lib/sdk/freepascal/fpc"
       - make install prefix=/app
       - |
         # Install fgmod script as a Flatpak command
