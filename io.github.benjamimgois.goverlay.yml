@@ -146,6 +146,7 @@ modules:
         commit: 58b812ae69824348567df604510800cc508bd416
     build-commands:
       - |
+        . /usr/lib/sdk/freepascal/enable.sh
         # Use Flatpak-compatible launcher script
         cp data/goverlay.sh.flatpak data/goverlay.sh.in
       - |
