@@ -68,19 +68,6 @@ modules:
         sha256: d56329b52898c2bfe4522d6a59ebf305e44ee8a2935bbe7bcd43d825e88293a3
         dest-filename: libqt6pas6_6.2.10-1_amd64.deb
 
-  # libgit2 - Native git operations
-  - name: libgit2
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DCMAKE_BUILD_TYPE=Release
-      - -DBUILD_SHARED_LIBS=ON
-      - -DBUILD_TESTS=OFF
-      - -DUSE_SSH=OFF
-    sources:
-      - type: archive
-        url: https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.2.tar.gz
-        sha256: de384e29d7efc9330c6cdb126ebf88342b5025d920dcb7c645defad85195ea7f
-
   # Git (for ReShade shader cloning)
   - name: git
     buildsystem: autotools
