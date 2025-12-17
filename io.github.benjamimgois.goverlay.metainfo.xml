@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component type="desktop-application">
+  <id>io.github.benjamimgois.goverlay</id>
+
+  <name>App</name>
+  <summary>Goverlay</summary>
+  <developer id="org.example">
+    <name>Developer name</name>
+  </developer>
+
+  <url type="homepage">https://github.com/benjamimgois/goverlay</url>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>CC0-1.0</project_license>
+
+  <description>
+    <p>
+      Goverlay is an easy graphical interface to configure MangoHud, vkBasalt, and OptiScaler.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">com.domain.App.desktop</launchable>
+
+  <branding>
+    <color type="primary" scheme_preference="light">#ff00ff</color>
+    <color type="primary" scheme_preference="dark">#993d3d</color>
+  </branding>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main screenshot</caption>
+      <image>https://domain.com/Screenshot.jpg</image>
+    </screenshot>
+    <screenshot>
+      <caption>Another screenshot</caption>
+      <image>https://domain.com/Screenshot2.jpg</image>
+    </screenshot>
+  </screenshots>
+
+  <releases>
+    <release version="1.0.0" date="2024-01-01">
+      <url type="details">https://domain.com/Release_notes.txt</url>
+      <description>
+        <ul>
+          <li>Added new.</li>
+          <li>Changed existing.</li>
+          <li>Fixed bug.</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+
+  <categories>
+    <category>Games</category>
+  </categories>
+
+  <content_rating type="oars-1.1" />
+</component>
