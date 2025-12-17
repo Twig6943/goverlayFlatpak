@@ -27,6 +27,7 @@ jobs:
         run: |
           sudo flatpak install -y flathub org.kde.Platform//6.10 org.kde.Sdk//6.10
           sudo flatpak install -y flathub io.qt.qtwebengine.BaseApp//6.10
+          sudo flatpak install -y flathub org.freedesktop.Sdk.Extension.freepascal//25.08
 
       - name: Build Flatpak
         run: |
