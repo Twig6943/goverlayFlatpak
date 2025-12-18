@@ -54,35 +54,6 @@ jobs:
           echo "size=$BUNDLE_SIZE" >> $GITHUB_OUTPUT
           echo "filename=goverlay-${{ github.ref_name }}.flatpak" >> $GITHUB_OUTPUT
 
-      - name: Upload Flatpak bundle to release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: goverlay-${{ github.ref_name }}.flatpak
-          body: |
-            ## Flatpak Package
-
-            **File:** `goverlay-${{ github.ref_name }}.flatpak`
-            **Size:** ${{ steps.bundle_info.outputs.size }}
-
-            ### Installation
-
-            ```bash
-            flatpak install goverlay-${{ github.ref_name }}.flatpak
-            ```
-
-            ### Running
-
-            ```bash
-            flatpak run io.github.benjamimgois.goverlay
-            ```
-
-            ### Requirements
-
-            - Flatpak installed on your system
-            - Flathub repository configured (for dependencies)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Upload bundle as artifact
         uses: actions/upload-artifact@v4
         with:
