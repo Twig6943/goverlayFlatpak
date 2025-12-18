@@ -50,12 +50,28 @@ modules:
         # Extract .deb package properly
         mkdir -p extracted
         cd extracted
-        # Extract the .deb file
-        ar x ../libqt6pas6_6.2.10-1_amd64.deb
+
+        # Extract the .deb file based on $FLATPAK_ARCH
+        case "$FLATPAK_ARCH" in
+        x86_64)
+            ar x ../libqt6pas6_6.2.10-1_amd64.deb
+            ;;
+        aarch64)
+            ar x ../libqt6pas6_6.2.10-1_arm64.deb
+            ;;
+        *)
+            exit 1
+            ;;
+        esac
+
         # Extract data archive
         tar xf data.tar.*
+
         # Copy libraries to /app/lib
-        cp -v usr/lib/x86_64-linux-gnu/libQt6Pas.so* /app/lib/ || cp -v usr/lib/libQt6Pas.so* /app/lib/ || find . -name "libQt6Pas.so*" -exec cp -v {} /app/lib/ \;
+        cp -v "usr/lib/$FLATPAK_ARCH-linux-gnu/libQt6Pas.so"* /app/lib/ \
+        || cp -v usr/lib/libQt6Pas.so* /app/lib/ \
+        || find . -name "libQt6Pas.so*" -exec cp -v {} /app/lib/ \;
+
         # Create symlinks for linking
         cd /app/lib
         if [ -f libQt6Pas.so.6.2.10 ]; then
@@ -67,6 +83,10 @@ modules:
         url: https://github.com/davidbannon/libqt6pas/releases/download/v6.2.10/libqt6pas6_6.2.10-1_amd64.deb
         sha256: d56329b52898c2bfe4522d6a59ebf305e44ee8a2935bbe7bcd43d825e88293a3
         dest-filename: libqt6pas6_6.2.10-1_amd64.deb
+      - type: file
+        url: https://github.com/davidbannon/libqt6pas/releases/download/v6.2.10/libqt6pas6_6.2.10-1_arm64.deb
+        sha256: 1a04d084152e2690bd3ff3bb6609245e9daa087ae712ff3edb2289074272e988
+        dest-filename: libqt6pas6_6.2.10-1_arm64.deb
 
   # Git (for ReShade shader cloning)
   - name: git
@@ -150,12 +170,12 @@ modules:
         cp data/goverlay.sh.flatpak data/goverlay.sh.in
       - |
         . /usr/lib/sdk/freepascal/enable.sh
-        
+
         export HOME=/run/build/goverlay
         export LAZARUS_CONFIG_PATH=$HOME/.lazarus
         export LAZARUSDIR="/usr/lib/sdk/freepascal/share/lazarus"
         export FPC="/usr/lib/sdk/freepascal/bin/fpc"
-        
+
         # Build with lazbuild
         make LAZBUILDOPTS="--lazarusdir=$LAZARUSDIR --compiler=$FPC"
       - make install prefix=/app
