@@ -14,11 +14,9 @@ finish-args:
 
   # Filesystem access for configuration files
   # Using create because of https://github.com/benjamimgois/goverlay/issues/63#issuecomment-3583286483
-  - --filesystem=xdg-config/MangoHud:rw
-  - --filesystem=xdg-config/vkBasalt:rw
-  - --filesystem=xdg-config/goverlay:rw
-  - --filesystem=xdg-data/goverlay:rw
-  - --filesystem=~/fgmod:rw
+  - --persist=xdg-config/MangoHud:rw
+  - --persist=xdg-config/vkBasalt:rw
+  - --persist=~/fgmod:rw
 
   # Network access for downloads (OptiScaler, ReShade shaders, updates)
   - --share=network
@@ -27,9 +25,6 @@ finish-args:
   - --share=ipc
   - --socket=wayland
   - --socket=fallback-x11
-
-  # Desktop notifications
-  - --talk-name=org.freedesktop.Notifications
 
 cleanup:
   - /include
@@ -189,3 +184,5 @@ modules:
         # Create directories for Vulkan layer extensions
         mkdir -p /app/lib/extensions/vulkan/MangoHud
         mkdir -p /app/lib/extensions/vulkan/vkBasalt
+        # Install metainfo
+        install -Dm644 ${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo
