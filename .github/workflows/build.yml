@@ -5,8 +5,16 @@ on:
 
 jobs:
   build-flatpak:
-    name: Build Flatpak Bundle
-    runs-on: ubuntu-latest
+    name: Build Flatpak Bundle (${{ matrix.arch }})
+    runs-on: ${{ matrix.runner }}
+
+    strategy:
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-latest
+          - arch: arm64
+            runner: ubuntu-latest-arm64
 
     steps:
       - name: Checkout code
@@ -44,19 +52,19 @@ jobs:
         run: |
           flatpak build-bundle \
             flatpak-repo \
-            goverlay-${{ github.ref_name }}.flatpak \
+            goverlay-${{ github.ref_name }}-${{ matrix.arch }}.flatpak \
             io.github.benjamimgois.goverlay
 
       - name: Get bundle info
         id: bundle_info
         run: |
-          BUNDLE_SIZE=$(du -h goverlay-${{ github.ref_name }}.flatpak | cut -f1)
+          BUNDLE_SIZE=$(du -h goverlay-${{ github.ref_name }}-${{ matrix.arch }}.flatpak | cut -f1)
           echo "size=$BUNDLE_SIZE" >> $GITHUB_OUTPUT
-          echo "filename=goverlay-${{ github.ref_name }}.flatpak" >> $GITHUB_OUTPUT
+          echo "filename=goverlay-${{ github.ref_name }}-${{ matrix.arch }}.flatpak" >> $GITHUB_OUTPUT
 
       - name: Upload bundle as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: flatpak-bundle
-          path: goverlay-${{ github.ref_name }}.flatpak
+          name: flatpak-bundle-${{ matrix.arch }}
+          path: goverlay-${{ github.ref_name }}-${{ matrix.arch }}.flatpak
           retention-days: 90
