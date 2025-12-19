@@ -39,13 +39,13 @@ cleanup-commands:
 modules:
   # Qt6 Pascal bindings
   - name: qt6pas
+    buildsystem: qmake
+    subdir: cbindings
     sources:
       - type: archive
         url: https://github.com/davidbannon/libqt6pas/archive/refs/tags/v6.2.10.tar.gz
         sha256: dbcc13559f991958fb69de31d67c85575bbe278fdff0813b51787da50720d591
-        buildsystem: qmake
-        subdir: cbindings
-        build-commands:
+    build-commands:
       - sed -e"s/target.path = .\+/target.path = '\/app\/lib'/" -i ./Qt6Pas.pro
 
   # Git (for ReShade shader cloning)
