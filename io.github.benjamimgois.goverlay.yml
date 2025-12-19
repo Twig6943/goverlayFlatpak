@@ -37,42 +37,17 @@ cleanup-commands:
   - /app/cleanup-BaseApp.sh
 
 modules:
-  # Qt6 Pascal bindings (using pre-built packages)
+  # Qt6 Pascal bindings
   - name: qt6pas
-    buildsystem: simple
-    build-commands:
-      - |
-        # Extract .deb package properly
-        mkdir -p extracted
-        cd extracted
+    buildsystem: qmake
+    config-opts:
+      - -after
+      - target.path=/app/lib
+    sources:
+      - type: shell
+        commands:
+          - cp -r /usr/lib/sdk/freepascal/share/lazarus/lcl/interfaces/qt6/cbindings/. .
 
-        # Extract the .deb file based on $FLATPAK_ARCH
-        case "$FLATPAK_ARCH" in
-        x86_64)
-            ar x ../libqt6pas6_6.2.10-1_amd64.deb
-            ;;
-        aarch64)
-            ar x ../libqt6pas6_6.2.10-1_arm64.deb
-            ;;
-        *)
-            exit 1
-            ;;
-        esac
-
-        # Extract data archive
-        tar xf data.tar.*
-
-        # Copy libraries to /app/lib
-        cp -v "usr/lib/$FLATPAK_ARCH-linux-gnu/libQt6Pas.so"* /app/lib/ \
-        || cp -v usr/lib/libQt6Pas.so* /app/lib/ \
-        || find . -name "libQt6Pas.so*" -exec cp -v {} /app/lib/ \;
-
-        # Create symlinks for linking
-        cd /app/lib
-        if [ -f libQt6Pas.so.6.2.10 ]; then
-          ln -sf libQt6Pas.so.6.2.10 libQt6Pas.so.6
-          ln -sf libQt6Pas.so.6 libQt6Pas.so
-        fi
     sources:
       - type: file
         url: https://github.com/davidbannon/libqt6pas/releases/download/v6.2.10/libqt6pas6_6.2.10-1_amd64.deb
