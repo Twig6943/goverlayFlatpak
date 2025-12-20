@@ -45,8 +45,8 @@ modules:
       - type: archive
         url: https://github.com/davidbannon/libqt6pas/archive/refs/tags/v6.2.10.tar.gz
         sha256: dbcc13559f991958fb69de31d67c85575bbe278fdff0813b51787da50720d591
-    build-commands:
-      - sed -e"s/target.path = .\+/target.path = '\/app\/lib'/" -i ./Qt6Pas.pro
+      - type: patch
+        path: path_fix.patch
 
   # Git (for ReShade shader cloning)
   - name: git
