@@ -1,0 +1,5 @@
+--- a/Qt6Pas.pro
++++ b/Qt6Pas.pro
+@@ -1,5 +1,5 @@
+- target.path = ...
++ target.path = '/app/lib'
